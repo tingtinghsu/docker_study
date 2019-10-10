@@ -18,8 +18,19 @@ services:
       - RAILS_SERVE_STATIC_FILES=true
     networks:
       - ting
+    volumes:
+      - /tmp/sockets:/app/tmp/sockets
     depends_on:
       - db
-
+  nginx:
+    build: docker/nginx/.
+    ports:
+      - "80:80"
+    networks:
+      - ting
+    volumes:
+      - /tmp/sockets:/app/tmp/sockets
+    depends_on:
+      - app
 networks:
   ting:
